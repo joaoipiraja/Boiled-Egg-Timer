@@ -19,6 +19,14 @@ class ViewController: UIViewController {
     var secondsRemaining:Float = 60.0
     var timer = Timer()
     
+    
+    
+    func message(){
+        let alert = UIAlertController(title: "Hey", message: "Your egg is ready!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok", style: .default, handler: {_ in }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func showTime(interval: Float) -> String{
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
@@ -26,12 +34,6 @@ class ViewController: UIViewController {
 
         let formattedString = formatter.string(from: TimeInterval(interval))!
         return formattedString
-    }
-    
-    func message(){
-        let alert = UIAlertController(title: "Hey", message: "Your egg is ready!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok", style: .default, handler: {_ in }))
-        self.present(alert, animated: true, completion: nil)
     }
     
     @objc func updateTimer(sender:Timer){
@@ -50,9 +52,11 @@ class ViewController: UIViewController {
                 secondsRemaining -= 1.0
                 timeLabel.text = showTime(interval: secondsRemaining)
                 
+                if(secondsRemaining == 0.0){
+                    message()
+                }
+                
             }
-        }else{
-            message()
         }
     }
     
